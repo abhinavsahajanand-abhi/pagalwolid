@@ -24,21 +24,12 @@ function saveCart(items) {
 export function CartProvider({ children }) {
   const [items, setItems] = useState(loadCart);
 
+  // Only one product in cart at a time: adding replaces any previous product
   const addToCart = useCallback((productId, quantity = 1) => {
     const id = Number(productId);
-    setItems((prev) => {
-      const existing = prev.find((i) => i.id === id);
-      let next;
-      if (existing) {
-        next = prev.map((i) =>
-          i.id === id ? { ...i, quantity: i.quantity + quantity } : i
-        );
-      } else {
-        next = [...prev, { id, quantity }];
-      }
-      saveCart(next);
-      return next;
-    });
+    const next = [{ id, quantity }];
+    setItems(next);
+    saveCart(next);
   }, []);
 
   const removeFromCart = useCallback((productId) => {

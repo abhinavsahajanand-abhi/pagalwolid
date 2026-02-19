@@ -96,7 +96,7 @@ export default function Checkout() {
                       className="w-24 h-24 rounded-md object-cover flex-shrink-0"
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+                      <h3 className="text-lg font-semibold text-gray-800 break-words">
                         {row.product.name}
                       </h3>
                       <p className="text-gray-600 text-sm">

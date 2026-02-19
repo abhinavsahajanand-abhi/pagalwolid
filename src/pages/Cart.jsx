@@ -15,13 +15,8 @@ function formatMoney(amount) {
 }
 
 export default function Cart() {
-  const { items, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { items, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
-
-  // Clear cart when this page is opened so no data is shown
-  useEffect(() => {
-    clearCart();
-  }, [clearCart]);
 
   const cartWithProducts = items
     .map((item) => {
@@ -76,7 +71,7 @@ export default function Cart() {
                         className="w-20 h-20 rounded-md object-cover flex-shrink-0"
                       />
                       <div className="min-w-0 flex-1">
-                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 line-clamp-2">
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 break-words" >
                           {row.product.name}
                         </h2>
                         <p className="text-gray-600 text-sm">
