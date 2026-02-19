@@ -1,14 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { products } from "./productData.js";
 
-  const PRODUCTS_PER_PAGE = 10; // only 10 products on each pagination page
+const PRODUCTS_PER_PAGE = 10; // only 10 products on each pagination page
 
 export default function IndexPage() {
   const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE) || 1;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = parseInt(searchParams.get("page"), 10);
+  const currentPage =
+    !isNaN(pageParam) && pageParam >= 1
+      ? Math.min(pageParam, totalPages)
+      : 1;
+
+  const setCurrentPage = (page) => {
+    setSearchParams({ page: String(page) });
+  };
 
   const indexOfFirst = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const indexOfLast = indexOfFirst + PRODUCTS_PER_PAGE;

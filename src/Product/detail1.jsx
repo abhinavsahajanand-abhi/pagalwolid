@@ -3,7 +3,7 @@ import Footer from "../Footer.jsx";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { products } from "../productData";
-import productDetailsJson from "../../data-2026219114428.json";
+import productDetailsJson from "../../data-2.0.json";
 import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {
@@ -105,43 +105,45 @@ export default function ProductDetails() {
               )}
             </div>
 
-            {/* Quantity */}
-            <div className="flex items-center gap-3 mt-6">
-              <button
-                onClick={() => setQuantity((q) => (q > 1 ? q - 1 : 1))}
-                className="w-10 h-10 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center hover:bg-gray-300 transition"
-              >
-                −
-              </button>
+            {/* Quantity & Add to Cart - horizontally centered */}
+            <div className="flex flex-col items-center mt-6">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setQuantity((q) => (q > 1 ? q - 1 : 1))}
+                  className="w-10 h-10 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center hover:bg-gray-300 transition"
+                >
+                  −
+                </button>
 
-              <input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => {
-                  const val = parseInt(e.target.value, 10);
-                  if (!isNaN(val) && val >= 1) setQuantity(val);
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val >= 1) setQuantity(val);
+                  }}
+                  className="w-14 h-10 text-center border border-gray-300 rounded-lg"
+                />
+
+                <button
+                  onClick={() => setQuantity((q) => q + 1)}
+                  className="w-10 h-10 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center hover:bg-gray-300 transition"
+                >
+                  +
+                </button>
+              </div>
+
+              <button
+                onClick={() => {
+                  addToCart(productId, quantity);
+                  navigate("/cart");
                 }}
-                className="w-14 h-10 text-center border border-gray-300 rounded-lg"
-              />
-
-              <button
-                onClick={() => setQuantity((q) => q + 1)}
-                className="w-10 h-10 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center hover:bg-gray-300 transition"
+                className="mt-6 w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
               >
-                +
+                Add to Cart
               </button>
             </div>
-
-            <button
-              onClick={() => {
-                addToCart(productId, quantity);
-                navigate("/cart");
-              }}
-              className="mt-6 w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
-            >
-              Add to Cart
-            </button>
 
             <div className="mt-10 text-gray-700">
               <h3 className="font-bold mb-3 text-lg">
@@ -169,7 +171,9 @@ export default function ProductDetails() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-            {products.map((item) => (
+            {products
+              .filter((item) => item.id !== productId)
+              .map((item) => (
               <Link to={`/product/${item.id}`} key={item.id}>
                 <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
 

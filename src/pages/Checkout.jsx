@@ -228,14 +228,14 @@ export default function Checkout() {
               {/* STEP 9 - CONFIRMATION */}
               {step === 9 && (
                 <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-2 text-sm">
-                  <p><strong>Name:</strong> {formData.fullName}</p>
+                  {/* <p><strong>Name:</strong> {formData.fullName}</p>
                   <p><strong>Address:</strong> {formData.address1} {formData.address2}</p>
                   <p><strong>City:</strong> {formData.city}</p>
                   <p><strong>State:</strong> {formData.state}</p>
                   <p><strong>Pincode:</strong> {formData.pincode}</p>
                   <p><strong>Country:</strong> {formData.country}</p>
                   <p><strong>Phone:</strong> {formData.phone}</p>
-                  <p><strong>Email:</strong> {formData.email}</p>
+                  <p><strong>Email:</strong> {formData.email}</p> */}
                 </div>
               )}
 
