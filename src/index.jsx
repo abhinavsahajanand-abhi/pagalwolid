@@ -19,8 +19,7 @@ export default function IndexPage() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-6 py-10">
-
+<main className="w-full px-6 py-10">
 
         {/* TITLE */}
         <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
