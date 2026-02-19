@@ -1,25 +1,44 @@
 import Navbar from "../Navbar.jsx";
 import Footer from "../Footer.jsx";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { products } from "../productData";
+import productDetailsJson from "../../data-2026219114428.json";
+import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const productId = Number(id);
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
   const product =
     products.find((item) => item.id === productId) || products[0];
 
-  const productImages = [
-    product.image,
-    "/img/1764779761_g_1_Screenshot_2025-12-03_at_10.04.21___PM.png",
-    "/img/1764779761_g_2_Screenshot_2025-12-03_at_10.04.11___PM.png",
-    "/img/1764779761_thumb_Screenshot_2025-12-03_at_10.03.33___PM.png",
-  ];
+  // Use data from JSON file when user opens this product (matched by id)
+  const jsonProduct = useMemo(
+    () => productDetailsJson.find((item) => item.id === productId) || null,
+    [productId]
+  );
+
+  const productImages = useMemo(() => {
+    if (jsonProduct) {
+      const imgs = [];
+      for (let i = 1; i <= 10; i++) {
+        const key = `img${i}`;
+        if (jsonProduct[key]) imgs.push(jsonProduct[key]);
+      }
+      if (imgs.length > 0) return imgs;
+    }
+    return [product.image];
+  }, [jsonProduct, product.image]);
+
+  const displayTitle = jsonProduct?.title ?? product.name;
+  const displayPrice = jsonProduct != null ? `₹${jsonProduct.price}` : product.price;
+  const displayDescription = jsonProduct?.description ?? "";
+  const displayCategory = jsonProduct?.category ?? "Korean_Winter_Wear";
 
   const goPrev = () =>
     setCurrentImageIndex((i) =>
@@ -44,7 +63,7 @@ export default function ProductDetails() {
           <div className="relative rounded-xl overflow-hidden shadow-lg">
             <img
               src={productImages[currentImageIndex]}
-              alt={product.name}
+              alt={displayTitle}
               className="w-full h-auto object-cover"
             />
 
@@ -67,42 +86,23 @@ export default function ProductDetails() {
           <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
 
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
-              {product.name}
+              {displayTitle}
             </h1>
 
             <p className="text-2xl md:text-3xl font-semibold text-gray-900 mb-6">
-              {product.price}
+              {displayPrice}
             </p>
 
-            <div className="text-gray-600 leading-relaxed text-sm md:text-base">
-
-            <p class="text-gray-600 leading-relaxed mb-8">🔥 Stylish Winter Jacket &amp; Pant Combo – Premium Warmth, Modern Fit, 
-
-
-
-
-Unmatched Style
-When style meets comfort, winter fashion becomes effortless — and this Stylish Jacket with Pant Combo is exactly that. Designed for those who want a polished, modern, and high-impact look during the cold months, this combo delivers premium quality without compromising on everyday wearability. Whether you’re dressing for office, outings, travel, winter functions, or smart-casual occasions, this pair elevates your look instantly with its clean tailoring, trendy Korean-inspired finish, and ultra-comfortable winter-ready fabric.
-The jacket features a streamlined silhouette, crafted from soft yet structured winter material that keeps you warm while maintaining a sharp fit. Its versatile design allows you to layer it with T-shirts, high-necks, inner warmers, or formal shirts. The fit is engineered to enhance shoulder structure, contour the torso, and create a confident appearance — making it suitable for all body types. Subtle design touches like premium buttons, zip detailing, and minimalistic stitching give it a luxury finish.
-The matching pant completes the look with a sleek straight-fit or tapered design (depending on style variation), offering full flexibility and easy movement. The fabric is warm yet breathable, making it ideal for long wear during winter days and evenings. It drapes well, holds its shape, and maintains a neat, polished look without wrinkles or sagging. You don’t need to worry about styling — the combo is pre-matched to create a cohesive, well-coordinated outfit that works in multiple settings.
-This is a perfect option for college students, office goers, travellers, party wear needs, or anyone who wants a budget-friendly yet premium-looking winter outfit. The combo ensures you look effortlessly dressed up with minimal effort. Pair it with sneakers for a casual urban vibe, or choose boots/loafers for a dressed-up winter look.
-Durable, affordable, and stylish — this winter combo proves that practicality and fashion can go hand in hand.
-
-✔️ KEY POINTS (Inside Description)
-1. Premium Winter Fabric
-Made from soft, warm, and breathable winter material that provides excellent insulation without feeling heavy.
-2. Perfectly Coordinated Combo
-The jacket and pant are designed to complement each other, creating a clean and balanced overall look.
-3. Korean-Inspired Modern Fit
-Sharp shoulders, structured design, and minimalistic styling give a luxury, high-fashion appearance.
-4. Comfortable All-Day Wear
-Flexible, stretch-friendly, and skin-friendly materials suitable for long daily use.
-5. Multi-Occasion Ready
-Ideal for winter outings, office wear, casual looks, travel, and special events.
-6. Durable &amp; Easy to Maintain
-Holds its shape, resists wrinkles, and offers long-lasting wear.</p>
-
-
+            <div className="text-gray-800 leading-relaxed text-base text-justify">
+              {displayDescription ? (
+                <p className="mb-6 text-justify">
+                  {displayDescription.replace(/\r?\n/g, " ")}
+                </p>
+              ) : (
+                <p className="mb-6 text-justify">
+                  Premium quality product. Perfect for everyday wear, outings, and special occasions.
+                </p>
+              )}
             </div>
 
             {/* Quantity */}
@@ -134,7 +134,10 @@ Holds its shape, resists wrinkles, and offers long-lasting wear.</p>
             </div>
 
             <button
-              onClick={() => navigate("/cart")}
+              onClick={() => {
+                addToCart(productId, quantity);
+                navigate("/cart");
+              }}
               className="mt-6 w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
             >
               Add to Cart
@@ -147,10 +150,10 @@ Holds its shape, resists wrinkles, and offers long-lasting wear.</p>
 
               <ul className="list-disc list-inside space-y-1 text-sm md:text-base">
                 <li>
-                  <span className="font-medium">Category:</span> Korean_Winter_Wear
+                  <span className="font-medium">Category:</span> {displayCategory}
                 </li>
                 <li>
-                  <span className="font-medium">Price:</span> {product.price}
+                  <span className="font-medium">Price:</span> {displayPrice}
                 </li>
               </ul>
             </div>

@@ -2,9 +2,22 @@ import { useState } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { products } from "../productData";
+
+function parsePrice(priceStr) {
+  if (typeof priceStr === "number") return priceStr;
+  const num = parseInt(String(priceStr).replace(/[^0-9]/g, ""), 10);
+  return isNaN(num) ? 0 : num;
+}
+
+function formatMoney(amount) {
+  return `₹${Number(amount).toFixed(2)}`;
+}
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const { items } = useCart();
 
   const [step, setStep] = useState(1);
 
@@ -20,9 +33,21 @@ export default function Checkout() {
     email: "",
   });
 
-  const price = 299;
-  const quantity = 1;
-  const subtotal = price * quantity;
+  const cartWithProducts = items
+    .map((item) => {
+      const product = products.find((p) => p.id === item.id);
+      return {
+        ...item,
+        product: product || null,
+        priceEach: product ? parsePrice(product.price) : 0,
+      };
+    })
+    .filter((row) => row.product);
+
+  const subtotal = cartWithProducts.reduce(
+    (sum, row) => sum + row.priceEach * row.quantity,
+    0
+  );
   const shipping = 0;
   const total = subtotal + shipping;
 
@@ -56,35 +81,50 @@ export default function Checkout() {
               Your Order
             </h2>
 
-            <div className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://picsum.photos/200/200?random=1"
-                alt="Product"
-                className="w-24 h-24 rounded-md object-cover"
-              />
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Premium Winter Jacket Model 1
-                </h3>
-                <p className="text-gray-600">Quantity: {quantity}</p>
-                <p className="text-gray-600">Price: ₹{price}</p>
+            {cartWithProducts.length === 0 ? (
+              <p className="text-gray-600 mb-6">Your cart is empty.</p>
+            ) : (
+              <div className="space-y-4 mb-6">
+                {cartWithProducts.map((row) => (
+                  <div
+                    key={row.id}
+                    className="flex items-center space-x-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0"
+                  >
+                    <img
+                      src={row.product.image}
+                      alt={row.product.name}
+                      className="w-24 h-24 rounded-md object-cover flex-shrink-0"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+                        {row.product.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm">
+                        Quantity: {row.quantity}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        Price: {formatMoney(row.priceEach)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
+            )}
 
             <div className="border-t border-gray-200 pt-4">
               <div className="flex justify-between text-lg font-semibold text-gray-800">
                 <span>Subtotal</span>
-                <span>₹{subtotal.toFixed(2)}</span>
+                <span>{formatMoney(subtotal)}</span>
               </div>
 
               <div className="flex justify-between text-lg font-semibold text-gray-800">
                 <span>Shipping</span>
-                <span>₹{shipping.toFixed(2)}</span>
+                <span>{formatMoney(shipping)}</span>
               </div>
 
               <div className="flex justify-between text-xl font-bold text-gray-900 border-t border-gray-300 mt-4 pt-4">
                 <span>Total</span>
-                <span>₹{total.toFixed(2)}</span>
+                <span>{formatMoney(total)}</span>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
 import { Link } from "react-router-dom";
@@ -15,88 +15,86 @@ export default function IndexPage() {
   // Only ever show 10 products on this page (slice twice to be sure)
   const currentProducts = products.slice(indexOfFirst, indexOfLast).slice(0, PRODUCTS_PER_PAGE);
 
+  // Scroll to top when page (pagination) changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-<main className="w-full px-6 py-10">
-
+      <main className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16">
         {/* TITLE */}
-        <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8 md:mb-12">
           Featured Products
         </h2>
       
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
+        {/* GRID - same as detail1.jsx All Products section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {currentProducts.map((product, index) => (
-            <div
+            <Link
+              to={`/product/${product.id}`}
               key={`p${currentPage}-${indexOfFirst + index}`}
-              className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+              className="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer"
             >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-72 object-cover"
+                className="w-full h-56 object-cover"
               />
 
               <div className="p-6 text-center">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
                   {product.name}
                 </h3>
 
-                <p className="text-xl font-bold mt-2">
+                <span className="block text-xl font-bold text-gray-900 mb-4">
                   {product.price}
-                </p>
+                </span>
 
-                <Link to={`/product/${product.id}`}>
-                  <button className="mt-4 w-full bg-indigo-600 text-white py-3 rounded-full font-semibold hover:bg-indigo-700 transition">
-                    View
-                  </button>
-                </Link>
+                <span className="inline-block w-full bg-indigo-600 text-white py-2 px-4 rounded-full font-medium hover:bg-indigo-700 transition text-center">
+                  View
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
-
         </div>
 
-        {/* PAGINATION */}
-        <div className="flex justify-center items-center mt-16 flex-wrap gap-2">
-
-          {/* Prev */}
-          <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
-            className="px-4 py-2 text-sm rounded-md border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40"
-          >
-            « Prev
-          </button>
-
-          {/* Page numbers — 10 products per page only */}
-          {Array.from({ length: totalPages }, (_, i) => (
+        {/* PAGINATION - single line, scrolls on small screens */}
+        <div className="mt-12 md:mt-16 overflow-x-auto">
+          <div className="flex justify-center items-center flex-nowrap gap-2 min-w-max px-2">
             <button
-              key={i + 1}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`px-4 py-2 text-sm rounded-md border ${
-                currentPage === i + 1
-                  ? "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
-              }`}
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="flex-shrink-0 px-3 py-2 text-sm rounded-md border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 transition"
             >
-              {i + 1}
+              « Prev
             </button>
-          ))}
 
-          {/* Next */}
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
-            className="px-4 py-2 text-sm rounded-md border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40"
-          >
-            Next »
-          </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`flex-shrink-0 min-w-[2.25rem] px-3 py-2 text-sm rounded-md border transition ${
+                  currentPage === i + 1
+                    ? "bg-indigo-600 text-white border-indigo-600"
+                    : "bg-white text-gray-700 hover:bg-gray-100 hover:border-gray-300"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
 
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="flex-shrink-0 px-3 py-2 text-sm rounded-md border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 transition"
+            >
+              Next »
+            </button>
+          </div>
         </div>
 
       </main>

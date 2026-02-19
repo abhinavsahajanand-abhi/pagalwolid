@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import IndexPage from './index.jsx'
 import FAQ from './pages/FAQ.jsx'
@@ -11,11 +12,21 @@ import TermsConditions from './pages/TermsConditions.jsx'
 import Detail1 from "./Product/detail1";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import OrderSuccess from "./pages/OrderSuccess";
+import OrderSuccess from "./pages/OrderSuccess"
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<IndexPage />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/contact" element={<Contact />} />
@@ -28,7 +39,8 @@ function App() {
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-success" element={<OrderSuccess />} />
-    </Routes>
+      </Routes>
+    </>
   )
 }
 
