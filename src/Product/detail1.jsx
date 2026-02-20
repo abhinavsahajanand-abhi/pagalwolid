@@ -1,7 +1,7 @@
 import Navbar from "../Navbar.jsx";
 import Footer from "../Footer.jsx";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { products } from "../productData";
 import productDetailsJson from "../../data-2.0.json";
 import { useCart } from "../context/CartContext";
@@ -13,6 +13,7 @@ export default function ProductDetails() {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [failedImageUrls, setFailedImageUrls] = useState(() => new Set());
 
   const product =
     products.find((item) => item.id === productId) || products[0];
@@ -35,20 +36,41 @@ export default function ProductDetails() {
     return [product.image];
   }, [jsonProduct, product.image]);
 
+  // Skip images that failed to load; show only valid ones
+  const validImages = useMemo(
+    () => productImages.filter((url) => !failedImageUrls.has(url)),
+    [productImages, failedImageUrls]
+  );
+  const safeIndex = Math.min(
+    currentImageIndex,
+    Math.max(0, validImages.length - 1)
+  );
+  const currentImageUrl = validImages[safeIndex];
+
+  // Reset failed list and index when product changes
+  useEffect(() => {
+    setFailedImageUrls(new Set());
+    setCurrentImageIndex(0);
+  }, [productId]);
+
+  const handleImageError = () => {
+    if (currentImageUrl)
+      setFailedImageUrls((prev) => new Set(prev).add(currentImageUrl));
+  };
+
+  const goPrev = () =>
+    setCurrentImageIndex((i) =>
+      i === 0 ? validImages.length - 1 : i - 1
+    );
+  const goNext = () =>
+    setCurrentImageIndex((i) =>
+      i === validImages.length - 1 ? 0 : i + 1
+    );
+
   const displayTitle = jsonProduct?.title ?? product.name;
   const displayPrice = jsonProduct != null ? `₹${jsonProduct.price}` : product.price;
   const displayDescription = jsonProduct?.description ?? "";
   const displayCategory = jsonProduct?.category ?? "Korean_Winter_Wear";
-
-  const goPrev = () =>
-    setCurrentImageIndex((i) =>
-      i === 0 ? productImages.length - 1 : i - 1
-    );
-
-  const goNext = () =>
-    setCurrentImageIndex((i) =>
-      i === productImages.length - 1 ? 0 : i + 1
-    );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -56,30 +78,40 @@ export default function ProductDetails() {
 
       <main className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16">
 
-        {/* PRODUCT SECTION */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+        {/* PRODUCT SECTION - items-start so left column height = image height (arrows stay on image) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
 
-          {/* LEFT IMAGE */}
-          <div className="relative rounded-xl overflow-hidden shadow-lg">
-            <img
-              src={productImages[currentImageIndex]}
-              alt={displayTitle}
-              className="w-full h-auto object-cover"
-            />
-
-            <button
-              onClick={goPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 px-3 py-2 rounded-full hover:bg-gray-300 transition"
-            >
-              ‹
-            </button>
-
-            <button
-              onClick={goNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 px-3 py-2 rounded-full hover:bg-gray-300 transition"
-            >
-              ›
-            </button>
+          {/* LEFT IMAGE - skip missing/broken images, show next */}
+          <div className="relative rounded-xl overflow-hidden shadow-lg w-full">
+            {currentImageUrl ? (
+              <img
+                src={currentImageUrl}
+                alt={displayTitle}
+                className="w-full h-auto object-cover block"
+                onError={handleImageError}
+              />
+            ) : (
+              <div className="w-full aspect-square bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+                No image available
+              </div>
+            )}
+            {/* Overlay so arrows stay vertically centered for any image height */}
+            {validImages.length > 0 && (
+            <div className="absolute inset-0 flex items-center justify-between pointer-events-none px-2">
+              <button
+                onClick={goPrev}
+                className="pointer-events-auto bg-gray-200/90 text-gray-800 w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-300 transition shadow-md text-3xl font-bold leading-none"
+              >
+                ‹
+              </button>
+              <button
+                onClick={goNext}
+                className="pointer-events-auto bg-gray-200/90 text-gray-800 w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-300 transition shadow-md text-3xl font-bold leading-none"
+              >
+                ›
+              </button>
+            </div>
+            )}
           </div>
 
           {/* RIGHT SIDE */}

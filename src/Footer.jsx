@@ -1,7 +1,7 @@
 export default function Footer() {
   const quickLinks = [
     { label: 'Shop', href: '/' },
-    { label: 'About Us', href: '/pages/about-us' },
+    { label: 'About Us', href: '/about' },
     { label: 'FAQ', href: '/FAQ' },
     { label: 'Contact', href: '/contact' },
     { label: 'Policy', href: '/policy' },
