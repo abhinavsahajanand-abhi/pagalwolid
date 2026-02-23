@@ -36,7 +36,8 @@ export default function InterstitialAd({ isOpen, onClose }) {
       aria-modal="true"
       aria-label="Advertisement"
     >
-      <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden max-w-[90vw] max-h-[90vh] flex items-center justify-center min-w-[320px] min-h-[300px]">
+      <div className="relative bg-white rounded-xl shadow-2xl overflow-visible max-w-[95vw] w-full sm:max-w-[480px] max-h-[90vh] flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px] p-3 sm:p-4">
+        <p className="text-xs text-gray-500 mb-2">Advertisement</p>
         <button
           type="button"
           onClick={onClose}
@@ -47,8 +48,7 @@ export default function InterstitialAd({ isOpen, onClose }) {
         </button>
         <div
           id={INTERSTITIAL_DIV_ID}
-          className="min-w-[320px] min-h-[50px]"
-          style={{ minHeight: 50 }}
+          className="w-full min-w-0 min-h-[250px] sm:min-h-[320px] max-w-[480px] overflow-visible"
         />
       </div>
     </div>

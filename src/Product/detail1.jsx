@@ -163,8 +163,8 @@ export default function ProductDetails() {
                 </button>
               </div>
 
-              {/* d3 – above Add to Cart, middle */}
-              <div className="flex justify-center w-full my-6">
+              {/* d3 – above Add to Cart, middle; responsive */}
+              <div className="flex justify-center w-full max-w-[100vw] min-w-0 my-6 overflow-x-hidden">
                 <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" />
               </div>
 
