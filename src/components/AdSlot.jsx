@@ -30,8 +30,8 @@ export default function AdSlot({ divId, size = "banner", className = "" }) {
 
   const isRectangle = size === "rectangle";
   const sizeClass = isRectangle
-    ? "w-full max-w-[300px] min-h-[200px] sm:min-h-[250px] mx-auto overflow-visible"
-    : "w-full max-w-[728px] min-h-[50px] sm:min-h-[90px] mx-auto overflow-visible";
+    ? "w-full max-w-[300px] min-h-[250px] mx-auto overflow-visible"
+    : "w-full max-w-[728px] min-h-[280px] mx-auto overflow-visible";
 
   return (
     <div className="w-full min-w-0 overflow-visible">
@@ -40,6 +40,7 @@ export default function AdSlot({ divId, size = "banner", className = "" }) {
         ref={divRef}
         id={divId}
         className={`${sizeClass} ${className}`}
+        style={{ overflow: "visible" }}
       />
     </div>
   );

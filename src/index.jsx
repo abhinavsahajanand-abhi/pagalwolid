@@ -47,8 +47,8 @@ export default function IndexPage() {
           Featured Products
         </h2>
 
-        {/* Reward ad – below title, above product grid; responsive */}
-        <div className="w-full max-w-[100vw] overflow-x-hidden flex justify-center mb-6 sm:mb-8 px-0">
+        {/* Reward ad – below title, above product grid */}
+        <div className="w-full flex justify-center mb-6 sm:mb-8 px-0 overflow-visible">
           <AdSlot divId="div-gpt-ad-1771592484126-0" size="banner" />
         </div>
 
