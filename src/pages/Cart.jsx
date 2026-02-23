@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
 import { useCart } from "../context/CartContext";
 import { products } from "../productData";
 
@@ -38,8 +36,6 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
       <main>
         <section className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
@@ -147,8 +143,6 @@ export default function Cart() {
           )}
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

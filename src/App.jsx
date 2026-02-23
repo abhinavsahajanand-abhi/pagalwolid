@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
+import Layout from './components/Layout.jsx'
+import { InterstitialProvider } from './context/InterstitialContext.jsx'
 import IndexPage from './index.jsx'
 import FAQ from './pages/FAQ.jsx'
 import Contact from './pages/Contact.jsx'
@@ -26,20 +28,24 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <InterstitialProvider>
       <Routes>
-      <Route path="/" element={<IndexPage />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/return-refund" element={<ReturnRefund />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/policy" element={<Policy />} />
-      <Route path="/shipping-policy" element={<ShippingPolicy />} />
-      <Route path="/terms-and-conditions" element={<TermsConditions />} />
-      <Route path="/product/:id" element={<Detail1 />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/order-success" element={<OrderSuccess />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<IndexPage />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/return-refund" element={<ReturnRefund />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/policy" element={<Policy />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          <Route path="/product/:id" element={<Detail1 />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
+        </Route>
       </Routes>
+      </InterstitialProvider>
     </>
   )
 }

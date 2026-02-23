@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import Navbar from '../Navbar.jsx';
-import Footer from '../Footer.jsx';
 
 function IconEmail() {
   return (
@@ -40,8 +38,6 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      <Navbar />
-
       <main className="flex-1 px-4 py-10 sm:px-6 md:px-8">
         {/* Header */}
         <div className="mx-auto max-w-4xl text-center">
@@ -186,8 +182,6 @@ export default function Contact() {
           </p>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,11 +1,6 @@
-import Navbar from "../Navbar.jsx";
-import Footer from "../Footer.jsx";
-
 export default function TermsConditions() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-100">
-      <Navbar />
-
       <main className="flex-1">
         <section className="container mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-24">
           <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-12">
@@ -220,11 +215,10 @@ export default function TermsConditions() {
               </div>
 
             </div>
-          </div>
+
+      </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

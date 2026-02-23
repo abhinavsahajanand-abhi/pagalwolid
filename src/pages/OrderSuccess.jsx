@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 export default function OrderSuccess() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Navbar />
-
       <main className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="bg-white max-w-2xl w-full rounded-2xl shadow-lg p-10 text-center">
 
@@ -33,8 +29,6 @@ export default function OrderSuccess() {
 
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

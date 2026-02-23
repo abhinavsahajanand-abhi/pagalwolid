@@ -1,6 +1,3 @@
-import Navbar from '../Navbar.jsx';
-import Footer from '../Footer.jsx';
-
 const sections = [
   {
     title: 'Ordering & Payment',
@@ -77,8 +74,6 @@ function ChevronDown() {
 export default function FAQ() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      <Navbar />
-
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
         <h1 className="text-center text-2xl font-bold text-[#282c3f] sm:text-3xl">
           Frequently Asked Questions
@@ -112,8 +107,6 @@ export default function FAQ() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,11 +1,6 @@
-import Navbar from "../Navbar.jsx";
-import Footer from "../Footer.jsx";
-
 export default function ReturnRefund() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-100">
-      <Navbar />
-
       <main className="flex-1 px-4 py-10">
         <div className="mx-auto max-w-3xl bg-white p-8 shadow-sm rounded-md">
 
@@ -254,10 +249,8 @@ export default function ReturnRefund() {
 </section>
 
 
-        </div>
+      </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

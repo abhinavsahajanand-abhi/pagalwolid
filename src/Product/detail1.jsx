@@ -1,6 +1,6 @@
-import Navbar from "../Navbar.jsx";
-import Footer from "../Footer.jsx";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import AdSlot from "../components/AdSlot.jsx";
+import ProductLink from "../components/ProductLink.jsx";
 import { useState, useMemo, useEffect } from "react";
 import { products } from "../productData";
 import productDetailsJson from "../../data-2.0.json";
@@ -74,8 +74,6 @@ export default function ProductDetails() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
       <main className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16">
 
         {/* PRODUCT SECTION - items-start so left column height = image height (arrows stay on image) */}
@@ -115,8 +113,7 @@ export default function ProductDetails() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-
+          <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
               {displayTitle}
             </h1>
@@ -137,7 +134,7 @@ export default function ProductDetails() {
               )}
             </div>
 
-            {/* Quantity & Add to Cart - horizontally centered */}
+            {/* Quantity, Ad, Add to Cart – quantity first, then ad in middle, then button */}
             <div className="flex flex-col items-center mt-6">
               <div className="flex items-center gap-3">
                 <button
@@ -166,12 +163,17 @@ export default function ProductDetails() {
                 </button>
               </div>
 
+              {/* d3 – above Add to Cart, middle */}
+              <div className="flex justify-center w-full my-6">
+                <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" />
+              </div>
+
               <button
                 onClick={() => {
                   addToCart(productId, quantity);
                   navigate("/cart");
                 }}
-                className="mt-6 w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
+                className="w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
               >
                 Add to Cart
               </button>
@@ -206,8 +208,12 @@ export default function ProductDetails() {
             {products
               .filter((item) => item.id !== productId)
               .map((item) => (
-              <Link to={`/product/${item.id}`} key={item.id}>
-                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+              <ProductLink
+                key={item.id}
+                productId={item.id}
+                className="block"
+              >
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer">
 
                   <img
                     src={item.image}
@@ -224,21 +230,19 @@ export default function ProductDetails() {
                       {item.price}
                     </span>
 
-                    <button className="inline-block w-full bg-indigo-600 text-white py-2 px-4 rounded-full font-medium hover:bg-indigo-700 transition">
+                    <span className="inline-block w-full bg-indigo-600 text-white py-2 px-4 rounded-full font-medium hover:bg-indigo-700 transition">
                       View
-                    </button>
+                    </span>
                   </div>
 
                 </div>
-              </Link>
+              </ProductLink>
             ))}
 
           </div>
         </section>
 
       </main>
-
-      <Footer />
     </div>
   );
 }

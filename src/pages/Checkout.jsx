@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../productData";
@@ -70,8 +68,6 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
-
       <main>
         <section className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16 space-y-10">
 
@@ -265,8 +261,6 @@ export default function Checkout() {
 
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

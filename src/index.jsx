@@ -1,10 +1,13 @@
 import { useEffect } from "react";
-import Navbar from "./Navbar.jsx";
-import Footer from "./Footer.jsx";
 import { Link, useSearchParams } from "react-router-dom";
 import { products } from "./productData.js";
+import { useInterstitial } from "./context/InterstitialContext.jsx";
+import ProductLink from "./components/ProductLink.jsx";
+import AdSlot from "./components/AdSlot.jsx";
 
 const PRODUCTS_PER_PAGE = 10; // only 10 products on each pagination page
+
+const INTERSTITIAL_INDEX_KEY = "interstitial_index_shown";
 
 export default function IndexPage() {
   const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE) || 1;
@@ -14,6 +17,7 @@ export default function IndexPage() {
     !isNaN(pageParam) && pageParam >= 1
       ? Math.min(pageParam, totalPages)
       : 1;
+  const { showOnIndex } = useInterstitial();
 
   const setCurrentPage = (page) => {
     setSearchParams({ page: String(page) });
@@ -21,31 +25,39 @@ export default function IndexPage() {
 
   const indexOfFirst = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const indexOfLast = indexOfFirst + PRODUCTS_PER_PAGE;
-  // Only ever show 10 products on this page (slice twice to be sure)
   const currentProducts = products.slice(indexOfFirst, indexOfLast).slice(0, PRODUCTS_PER_PAGE);
 
-  // Scroll to top when page (pagination) changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  // Show interstitial when user visits index page (once per session)
+  useEffect(() => {
+    if (!sessionStorage.getItem(INTERSTITIAL_INDEX_KEY)) {
+      sessionStorage.setItem(INTERSTITIAL_INDEX_KEY, "1");
+      showOnIndex();
+    }
+  }, [showOnIndex]);
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
       <main className="container mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-16">
         {/* TITLE */}
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8 md:mb-12">
           Featured Products
         </h2>
-      
+
+        {/* Reward ad – below title, above product grid */}
+        <div className="flex justify-center mb-8">
+          <AdSlot divId="div-gpt-ad-1771592484126-0" size="banner" />
+        </div>
 
         {/* GRID - same as detail1.jsx All Products section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {currentProducts.map((product, index) => (
-            <Link
-              to={`/product/${product.id}`}
+            <ProductLink
               key={`p${currentPage}-${indexOfFirst + index}`}
+              productId={product.id}
               className="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer"
             >
               <img
@@ -67,7 +79,7 @@ export default function IndexPage() {
                   View
                 </span>
               </div>
-            </Link>
+            </ProductLink>
           ))}
         </div>
 
@@ -107,8 +119,6 @@ export default function IndexPage() {
         </div>
 
       </main>
-
-      <Footer />
     </div>
   );
 }
