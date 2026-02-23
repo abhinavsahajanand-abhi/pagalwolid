@@ -31,24 +31,21 @@ export default function InterstitialAd({ isOpen, onClose }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-2 sm:p-4 min-h-0 overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Advertisement"
+      onClick={onClose}
     >
-      <div className="relative bg-transparent rounded-xl overflow-visible max-w-[95vw] w-full sm:max-w-[480px] max-h-[90vh] flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px] p-3 sm:p-4">
-        <p className="text-xs text-white/90 mb-2">Advertisement</p>
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-2 right-2 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur flex items-center justify-center text-white font-bold text-lg border border-white/30"
-          aria-label="Close"
-        >
-          ×
-        </button>
+      <div
+        className="relative bg-transparent rounded-xl overflow-y-auto overflow-x-hidden max-w-[95vw] w-full sm:max-w-[480px] flex flex-col items-center justify-start min-h-0 py-2 px-2 sm:p-4"
+        style={{ maxHeight: "calc(100dvh - 24px)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div
           id={INTERSTITIAL_DIV_ID}
-          className="w-full min-w-0 min-h-[250px] sm:min-h-[320px] max-w-[480px] overflow-visible"
+          className="w-full min-w-0 min-h-[200px] sm:min-h-[280px] max-w-[480px] overflow-visible"
+          style={{ maxHeight: "calc(100dvh - 80px)" }}
         />
       </div>
     </div>
