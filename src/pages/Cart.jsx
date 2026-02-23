@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../productData";
+import AdSlot from "../components/AdSlot.jsx";
 
 function parsePrice(priceStr) {
   if (typeof priceStr === "number") return priceStr;
@@ -130,14 +131,23 @@ export default function Cart() {
                 </div>
               </div>
 
+              {/* Ad above Proceed to Checkout */}
+              <div className="w-full flex justify-center items-center my-6">
+                <AdSlot divId="div-gpt-ad-1771592484129-0" size="banner" className="w-full min-h-[90px]" />
+              </div>
+
               <div className="flex justify-center gap-4">
-               
                 <button
                   onClick={() => navigate("/checkout")}
                   className="bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
                 >
                   Proceed to Checkout
                 </button>
+              </div>
+
+              {/* Ad below Proceed to Checkout */}
+              <div className="w-full flex justify-center items-center my-6">
+                <AdSlot divId="div-gpt-ad-1771592484130-0" size="banner" className="w-full min-h-[90px]" />
               </div>
             </>
           )}

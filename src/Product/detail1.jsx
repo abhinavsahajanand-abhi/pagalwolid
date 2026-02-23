@@ -122,13 +122,32 @@ export default function ProductDetails() {
               {displayPrice}
             </p>
 
-            <div className="text-gray-800 leading-relaxed text-base text-justify">
+            <div className="text-gray-800 leading-relaxed text-base text-justify space-y-4">
               {displayDescription ? (
-                <p className="mb-6 text-justify">
-                  {displayDescription.replace(/\r?\n/g, " ")}
-                </p>
+                (() => {
+                  const hasParagraphBreaks = /\n\n+/.test(displayDescription);
+                  const paragraphs = hasParagraphBreaks
+                    ? displayDescription
+                        .split(/\n\n+/)
+                        .map((p) => p.replace(/\r?\n/g, " ").trim())
+                        .filter(Boolean)
+                    : (() => {
+                        const text = displayDescription.replace(/\r?\n/g, " ").trim();
+                        const sentences = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+                        const result = [];
+                        for (let i = 0; i < sentences.length; i += 4) {
+                          result.push(
+                            sentences.slice(i, i + 4).join(" ").trim()
+                          );
+                        }
+                        return result.filter(Boolean);
+                      })();
+                  return paragraphs.map((para, i) => (
+                    <p key={i} className="text-justify">{para}</p>
+                  ));
+                })()
               ) : (
-                <p className="mb-6 text-justify">
+                <p className="text-justify">
                   Premium quality product. Perfect for everyday wear, outings, and special occasions.
                 </p>
               )}

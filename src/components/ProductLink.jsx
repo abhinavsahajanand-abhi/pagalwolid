@@ -1,12 +1,19 @@
-import { Link } from "react-router-dom";
+import { useInterstitial } from "../context/InterstitialContext.jsx";
 
 /**
- * Link to product page. Interstitial ad shows only on first visit to index, not on product click.
+ * Link to product page. Clicking shows interstitial ad; closing the ad navigates to the product.
  */
 export default function ProductLink({ productId, children, className = "" }) {
+  const { showForProduct } = useInterstitial();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    showForProduct(productId);
+  };
+
   return (
-    <Link to={`/product/${productId}`} className={className}>
+    <a href={`/product/${productId}`} className={className} onClick={handleClick}>
       {children}
-    </Link>
+    </a>
   );
 }

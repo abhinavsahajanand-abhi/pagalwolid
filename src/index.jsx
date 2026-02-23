@@ -1,13 +1,10 @@
 import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { products } from "./productData.js";
-import { useInterstitial } from "./context/InterstitialContext.jsx";
 import ProductLink from "./components/ProductLink.jsx";
 import AdSlot from "./components/AdSlot.jsx";
 
 const PRODUCTS_PER_PAGE = 10; // only 10 products on each pagination page
-
-const INTERSTITIAL_INDEX_KEY = "interstitial_index_shown";
 
 export default function IndexPage() {
   const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE) || 1;
@@ -17,7 +14,6 @@ export default function IndexPage() {
     !isNaN(pageParam) && pageParam >= 1
       ? Math.min(pageParam, totalPages)
       : 1;
-  const { showOnIndex } = useInterstitial();
 
   const setCurrentPage = (page) => {
     setSearchParams({ page: String(page) });
@@ -30,14 +26,6 @@ export default function IndexPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
-
-  // Show interstitial when user visits index page (once per session)
-  useEffect(() => {
-    if (!sessionStorage.getItem(INTERSTITIAL_INDEX_KEY)) {
-      sessionStorage.setItem(INTERSTITIAL_INDEX_KEY, "1");
-      showOnIndex();
-    }
-  }, [showOnIndex]);
 
   return (
     <div className="min-h-screen bg-gray-50">
