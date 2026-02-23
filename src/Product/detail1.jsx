@@ -163,8 +163,8 @@ export default function ProductDetails() {
                 </button>
               </div>
 
-              {/* d3 – above Add to Cart, middle */}
-              <div className="flex justify-center w-full min-w-0 my-6 overflow-visible">
+              {/* d3 – above Add to Cart; min-height so slot has size when GPT runs */}
+              <div className="flex justify-center w-full min-w-0 min-h-[280px] my-6 overflow-visible">
                 <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" />
               </div>
 

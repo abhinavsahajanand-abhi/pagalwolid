@@ -13,7 +13,7 @@ export default function TermsConditions() {
 
               <div>
                 <p className="mb-2 font-semibold">
-                  Welcome to Pagalworlid.
+                  Welcome to Camorex.
                 </p>
                 <p>
                   These Terms & Conditions govern your use of our website and the purchase of products from us.
@@ -138,7 +138,7 @@ export default function TermsConditions() {
                   9. Intellectual Property
                 </h2>
                 <p>
-                  All website content is the property of Pagalworlid.
+                  All website content is the property of Camorex.
                 </p>
               </div>
 

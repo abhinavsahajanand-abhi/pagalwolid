@@ -16,9 +16,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h4 className="text-xl font-bold text-gray-800 mb-4">Pagalworlid</h4>
+            <h4 className="text-xl font-bold text-gray-800 mb-4">Camorex</h4>
             <p className="text-gray-600 leading-relaxed">
-              Pagalworlid is an online fashion e-commerce store offering clothing for men and women in India.
+              Camorex is an online fashion e-commerce store offering clothing for men and women in India.
             </p>
           </div>
 
@@ -43,7 +43,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-gray-500 text-sm">
-            © 2026 Pagalworlid. Owned and operated by BAKULBHAI DURLABHBHAI DOMADIYA HUF, India.
+            © 2026 Camorex. Owned and operated by BAKULBHAI DURLABHBHAI DOMADIYA HUF, India.
           </p>
         </div>
       </div>

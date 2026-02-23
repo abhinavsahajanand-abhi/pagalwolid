@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
 
               <div>
                 <p className="mb-4">
-                  At Pagalworlid, we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit or make a purchase from our website.
+                  At Camorex, we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit or make a purchase from our website.
                 </p>
                 <p>
                   By accessing or using our website, you agree to the terms of this Privacy Policy.
@@ -155,7 +155,7 @@ export default function PrivacyPolicy() {
                   6. Payment Security
                 </h2>
                 <p>
-                  All payments on Pagalworlid are processed through secure and trusted third-party payment gateways. We do not store your debit/credit card details.
+                  All payments on Camorex are processed through secure and trusted third-party payment gateways. We do not store your debit/credit card details.
                 </p>
               </div>
 

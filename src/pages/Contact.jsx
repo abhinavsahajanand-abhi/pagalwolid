@@ -43,7 +43,7 @@ export default function Contact() {
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl">Contact Us</h1>
           <p className="mt-3 text-gray-600">
-            We're here to help! At Pagalworlid, customer satisfaction is our priority. If you have any questions regarding your order or our products, please feel free to reach out.
+            We're here to help! At Camorex, customer satisfaction is our priority. If you have any questions regarding your order or our products, please feel free to reach out.
           </p>
         </div>
 
@@ -178,7 +178,7 @@ export default function Contact() {
         <div className="mx-auto mt-16 max-w-2xl text-center">
           <h2 className="text-2xl font-bold text-gray-800">Thank You for Reaching Out</h2>
           <p className="mt-2 text-gray-600">
-            Thank you for choosing Pagalworlid. We appreciate your trust and look forward to assisting you.
+            Thank you for choosing Camorex. We appreciate your trust and look forward to assisting you.
           </p>
         </div>
       </main>

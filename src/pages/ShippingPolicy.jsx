@@ -13,7 +13,7 @@ export default function ShippingPolicy() {
 
               <div>
                 <p>
-                  At Pagalworlid, we are committed to delivering your orders in a timely, secure, and reliable manner.
+                  At Camorex, we are committed to delivering your orders in a timely, secure, and reliable manner.
                 </p>
               </div>
 

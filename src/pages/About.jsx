@@ -13,7 +13,7 @@ export default function About() {
 
               <div>
                 <p className="mb-4">
-                  Pagalworlid.com is owned and operated by BAKULBHAI DURLABHBHAI DOMADIYA HUF, India.
+                  Camorex.com is owned and operated by BAKULBHAI DURLABHBHAI DOMADIYA HUF, India.
                 </p>
               </div>
 
@@ -22,7 +22,7 @@ export default function About() {
                   Who We Are
                 </h2>
                 <p className="mb-4">
-                  Pagalworlid is operated by a legally registered Indian business entity:
+                  Camorex is operated by a legally registered Indian business entity:
                 </p>
 
                 <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 mb-4">
@@ -64,7 +64,7 @@ export default function About() {
                   Our Vision
                 </h2>
                 <p className="mb-4">
-                  At Pagalworlid, our vision is to make fashionable clothing accessible to everyone without compromising on quality, transparency, or customer trust.
+                  At Camorex, our vision is to make fashionable clothing accessible to everyone without compromising on quality, transparency, or customer trust.
                 </p>
                 <p className="mb-2">
                   We aim to build long-term relationships with our customers by providing:
@@ -130,7 +130,7 @@ export default function About() {
 
               <div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                  Why Choose Pagalworlid
+                  Why Choose Camorex
                 </h2>
                 <ul className="space-y-2 font-medium">
                   <li>✔ Registered Indian Business</li>
@@ -155,7 +155,7 @@ export default function About() {
                   Thank You
                 </h2>
                 <p>
-                  Thank you for choosing Pagalworlid.<br />
+                  Thank you for choosing Camorex.<br />
                   We value your trust and look forward to serving you.
                 </p>
               </div>

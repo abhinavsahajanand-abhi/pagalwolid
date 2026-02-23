@@ -22,7 +22,7 @@ export default function Navbar() {
             to="/"
             className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight"
           >
-            Pagalworlid
+            Camorex
           </Link>
 
           {/* Desktop Navigation Menu */}

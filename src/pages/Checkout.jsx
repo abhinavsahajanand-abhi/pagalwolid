@@ -17,8 +17,6 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { items } = useCart();
 
-  const [step, setStep] = useState(1);
-
   const [formData, setFormData] = useState({
     fullName: "",
     address1: "",
@@ -56,14 +54,9 @@ export default function Checkout() {
     });
   };
 
-  const nextStep = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (step < 9) {
-      setStep(step + 1);
-    } else {
-      navigate("/order-success");
-    }
+    navigate("/order-success");
   };
 
   return (
@@ -131,116 +124,75 @@ export default function Checkout() {
               Customer Details
             </h2>
 
-            <form onSubmit={nextStep} className="space-y-6">
-
-              {/* STEP 1 - FULL NAME */}
-              {step === 1 && (
-                <InputField
-                  label="Full Name"
-                  name="fullName"
-                  formData={formData}
-                  handleChange={handleChange}
-                />
-              )}
-
-              {/* STEP 2 - ADDRESS */}
-              {step === 2 && (
-                <>
-                  <InputField
-                    label="Address Line 1"
-                    name="address1"
-                    formData={formData}
-                    handleChange={handleChange}
-                  />
-                  <InputField
-                    label="Address Line 2"
-                    name="address2"
-                    formData={formData}
-                    handleChange={handleChange}
-                  />
-                </>
-              )}
-
-              {/* STEP 3 */}
-              {step === 3 && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* All customer details in one form */}
+              <InputField
+                label="Full Name"
+                name="fullName"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <InputField
+                label="Address Line 1"
+                name="address1"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <InputField
+                label="Address Line 2"
+                name="address2"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <InputField
                   label="City"
                   name="city"
                   formData={formData}
                   handleChange={handleChange}
                 />
-              )}
-
-              {/* STEP 4 */}
-              {step === 4 && (
                 <InputField
                   label="State"
                   name="state"
                   formData={formData}
                   handleChange={handleChange}
                 />
-              )}
-
-              {/* STEP 5 */}
-              {step === 5 && (
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <InputField
                   label="Pincode"
                   name="pincode"
                   formData={formData}
                   handleChange={handleChange}
                 />
-              )}
-
-              {/* STEP 6 */}
-              {step === 6 && (
                 <InputField
                   label="Country"
                   name="country"
                   formData={formData}
                   handleChange={handleChange}
                 />
-              )}
-
-              {/* STEP 7 */}
-              {step === 7 && (
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <InputField
                   label="Phone Number"
                   name="phone"
                   formData={formData}
                   handleChange={handleChange}
                 />
-              )}
-
-              {/* STEP 8 */}
-              {step === 8 && (
                 <InputField
                   label="Email"
                   name="email"
                   formData={formData}
                   handleChange={handleChange}
+                  type="email"
                 />
-              )}
+              </div>
 
-              {/* STEP 9 - CONFIRMATION */}
-              {step === 9 && (
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-2 text-sm">
-                  {/* <p><strong>Name:</strong> {formData.fullName}</p>
-                  <p><strong>Address:</strong> {formData.address1} {formData.address2}</p>
-                  <p><strong>City:</strong> {formData.city}</p>
-                  <p><strong>State:</strong> {formData.state}</p>
-                  <p><strong>Pincode:</strong> {formData.pincode}</p>
-                  <p><strong>Country:</strong> {formData.country}</p>
-                  <p><strong>Phone:</strong> {formData.phone}</p>
-                  <p><strong>Email:</strong> {formData.email}</p> */}
-                </div>
-              )}
-
-              {/* NEXT BUTTON */}
               <button
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold hover:bg-indigo-700 transition shadow-md"
               >
-                {step === 9 ? "Next" : "Next"}
+                Place Order
               </button>
             </form>
 
@@ -265,17 +217,19 @@ export default function Checkout() {
   );
 }
 
-function InputField({ label, name, formData, handleChange }) {
+function InputField({ label, name, formData, handleChange, required, type = "text" }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700">
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       <input
-        type="text"
+        type={type}
         name={name}
         value={formData[name]}
         onChange={handleChange}
+        required={required}
         className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm"
       />
     </div>

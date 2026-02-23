@@ -8,7 +8,7 @@ export default function ReturnRefund() {
           <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">Return &amp; Refund Policy</h1>
 
           <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-            At Pagalworlid, customer satisfaction is important to us. We strive
+            At Camorex, customer satisfaction is important to us. We strive
             to offer quality products and a smooth shopping experience.
             If you are not completely satisfied with your purchase, we’re here
             to help.
