@@ -30,11 +30,11 @@ export default function AdSlot({ divId, size = "banner", className = "" }) {
 
   const isRectangle = size === "rectangle";
   const sizeClass = isRectangle
-    ? "w-full max-w-[300px] min-h-[250px] mx-auto overflow-visible"
+    ? "w-full max-w-[336px] min-h-[280px] mx-auto overflow-visible"
     : "w-full max-w-[728px] min-h-[280px] mx-auto overflow-visible";
 
   return (
-    <div className="w-full min-w-0 overflow-visible">
+    <div className="w-full min-w-0 overflow-visible flex flex-col items-center">
       <p className="text-xs text-gray-500 text-center mb-1">Advertisement</p>
       <div
         ref={divRef}

@@ -19,9 +19,13 @@
           .addSize([0, 0], [[300, 250], [320, 50], [320, 100]])
           .build();
 
+        var mappingRect = googletag.sizeMapping()
+          .addSize([0, 0], [[300, 250], [336, 280], [320, 100], [320, 50]])
+          .build();
+
         googletag.defineSlot('/23330730517/pagalworld.qubetro.com_d1', [[300, 250], [320, 100], 'fluid', [336, 280], [728, 90]], 'div-gpt-ad-1771592250497-0').defineSizeMapping(mapping).addService(googletag.pubads());
         googletag.defineSlot('/23330730517/pagalworld.qubetro.com_d2', [[320, 100], 'fluid', [336, 280], [728, 90], [300, 250]], 'div-gpt-ad-1771592286821-0').defineSizeMapping(mapping).addService(googletag.pubads());
-        googletag.defineSlot('/23330730517/pagalworld.qubetro.com_d3', [[320, 100], 'fluid', [300, 250], [728, 90], [336, 280]], 'div-gpt-ad-1771592354782-0').defineSizeMapping(mapping).addService(googletag.pubads());
+        googletag.defineSlot('/23330730517/pagalworld.qubetro.com_d3', [[320, 100], 'fluid', [300, 250], [336, 280]], 'div-gpt-ad-1771592354782-0').defineSizeMapping(mappingRect).addService(googletag.pubads());
         googletag.defineSlot('/23330730517/pagalworld.qubetro.com_inter', [[320, 50], [320, 480], [480, 320]], 'div-gpt-ad-1771592422927-0').addService(googletag.pubads());
         googletag.defineSlot('/23330730517/pagalworld.qubetro.com_reward', [[468, 60], 'fluid', [480, 320], [1, 1], [320, 480]], 'div-gpt-ad-1771592484126-0').defineSizeMapping(mapping).addService(googletag.pubads());
         googletag.enableServices();
