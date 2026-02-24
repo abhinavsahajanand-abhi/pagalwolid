@@ -31,7 +31,7 @@ export default function InterstitialAd({ isOpen, onClose }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-2 sm:p-4 min-h-0 overflow-hidden"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-transparent p-2 sm:p-4 min-h-0 overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Advertisement"
