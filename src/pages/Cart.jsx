@@ -131,9 +131,9 @@ export default function Cart() {
                 </div>
               </div>
 
-              {/* Ad above Proceed to Checkout – d3 */}
-              <div className="w-full flex justify-center items-center my-6">
-                <AdSlot divId="div-gpt-ad-cart-above-0" size="rectangle" className="w-full min-h-[90px]" />
+              {/* Ad above Proceed to Checkout – d3 (div-gpt-ad-1771592354782-0) */}
+              <div className="w-full max-w-full overflow-visible min-h-[120px] py-4 flex justify-center items-center my-6">
+                <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" />
               </div>
 
               <div className="flex justify-center gap-4">
@@ -145,9 +145,9 @@ export default function Cart() {
                 </button>
               </div>
 
-              {/* Ad below Proceed to Checkout – d1 */}
+              {/* Ad below Proceed to Checkout – reward (div-gpt-ad-1771592484126-0) */}
               <div className="w-full flex justify-center items-center my-6">
-                <AdSlot divId="div-gpt-ad-cart-below-0" size="banner" className="w-full min-h-[90px]" />
+                <AdSlot divId="div-gpt-ad-1771592484126-0" size="banner" className="w-full min-h-[90px]" />
               </div>
             </>
           )}

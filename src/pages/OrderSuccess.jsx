@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AdSlot from "../components/AdSlot.jsx";
 
 export default function OrderSuccess() {
   return (
@@ -20,12 +21,22 @@ export default function OrderSuccess() {
             <span className="font-semibold">3–5 business days</span>.
           </p>
 
+          {/* Ad above Continue Shopping – d3 (rectangle) */}
+          <div className="w-full max-w-full overflow-visible min-h-[200px] sm:min-h-[280px] flex justify-center items-center my-6">
+            <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" />
+          </div>
+
           <Link
             to="/"
             className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:bg-indigo-700 transition"
           >
             Continue Shopping
           </Link>
+
+          {/* Ad below Continue Shopping – reward (rectangle) */}
+          <div className="w-full max-w-full overflow-visible min-h-[200px] sm:min-h-[280px] flex justify-center items-center mt-6">
+            <AdSlot divId="div-gpt-ad-1771592484126-0" size="rectangle" />
+          </div>
 
         </div>
       </main>

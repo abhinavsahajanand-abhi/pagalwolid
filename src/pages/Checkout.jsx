@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../productData";
+import AdSlot from "../components/AdSlot.jsx";
 
 function parsePrice(priceStr) {
   if (typeof priceStr === "number") return priceStr;
@@ -188,28 +189,24 @@ export default function Checkout() {
                 />
               </div>
 
+              {/* Ad above Place Order – d3 (div-gpt-ad-1771592354782-0) */}
+              <div className="w-full flex justify-center items-center my-6">
+                <AdSlot divId="div-gpt-ad-1771592354782-0" size="rectangle" className="w-full min-h-[90px]" />
+              </div>
+
               <button
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold hover:bg-indigo-700 transition shadow-md"
               >
                 Place Order
               </button>
-            </form>
 
-            {/* NOTE BLOCK */}
-            <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md shadow-sm">
-  <p className="text-sm text-gray-700 leading-relaxed">
-    Please ensure that the information you provide is accurate and complete.
-    Your name, contact details, and address will be used for order processing
-    and timely delivery. Any mistakes in the details may cause delays or
-    failed deliveries. Double-check your entries before proceeding to the
-    next step. Providing a valid phone number and email address will also
-    help us contact you for updates regarding your order. We value your
-    trust and make every effort to ensure a smooth and hassle-free shopping
-    experience. Thank you for choosing us!
-  </p>
-</div>
-</div>
+              {/* Ad below Place Order – reward (div-gpt-ad-1771592484126-0) */}
+              <div className="w-full flex justify-center items-center my-6">
+                <AdSlot divId="div-gpt-ad-1771592484126-0" size="rectangle" className="w-full min-h-[90px]" />
+              </div>
+            </form>
+          </div>
 
         </section>
       </main>

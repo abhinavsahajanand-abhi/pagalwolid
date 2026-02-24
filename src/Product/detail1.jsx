@@ -196,6 +196,11 @@ export default function ProductDetails() {
               >
                 Add to Cart
               </button>
+
+              {/* reward – below Add to Cart (div-gpt-ad-1771592484126-0); min-height so slot has size when GPT runs */}
+              <div className="flex justify-center w-full min-w-0 min-h-[280px] my-6 overflow-visible">
+                <AdSlot divId="div-gpt-ad-1771592484126-0" size="banner" />
+              </div>
             </div>
 
             <div className="mt-10 text-gray-700">
