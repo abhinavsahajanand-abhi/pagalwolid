@@ -1,9 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const INTERSTITIAL_DIV_ID = "div-gpt-ad-1771592422927-0";
 
 export default function InterstitialAd({ isOpen, onClose }) {
   const containerRef = useRef(null);
+  const [adFilled, setAdFilled] = useState(false);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setAdFilled(false);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || typeof window === "undefined") return;
@@ -26,15 +34,53 @@ export default function InterstitialAd({ isOpen, onClose }) {
     }
   }, [isOpen]);
 
+  const timeoutRef = useRef(null);
+  const handlerRef = useRef(null);
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined" || !window.googletag) return;
+    handlerRef.current = (e) => {
+      if (e.slot.getSlotElementId() !== INTERSTITIAL_DIV_ID) return;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (e.isEmpty) {
+        onCloseRef.current();
+      } else {
+        setAdFilled(true);
+      }
+    };
+    const handler = (e) => handlerRef.current?.(e);
+    timeoutRef.current = setTimeout(() => {
+      timeoutRef.current = null;
+      onCloseRef.current();
+    }, 1500);
+    window.googletag.cmd.push(function () {
+      const pubads = window.googletag.pubads();
+      if (pubads) pubads.addEventListener("slotRenderEnded", handler);
+    });
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      try {
+        window.googletag?.pubads?.()?.removeEventListener("slotRenderEnded", handler);
+      } catch (_) {}
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const showPopup = adFilled;
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-transparent p-2 sm:p-4 min-h-0 overflow-hidden"
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-transparent p-2 sm:p-4 min-h-0 overflow-hidden transition-opacity duration-200 ${
+        showPopup ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
       role="dialog"
       aria-modal="true"
       aria-label="Advertisement"
+      aria-hidden={!showPopup}
       onClick={onClose}
     >
       <div
