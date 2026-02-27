@@ -2,6 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import AdSlot from "../components/AdSlot.jsx";
 import ProductLink from "../components/ProductLink.jsx";
 import { useState, useMemo, useEffect } from "react";
+
+let lastViewContentProductId = null;
 import { products } from "../productData";
 import productDetailsJson from "../../data-2.0.json";
 import { useCart } from "../context/CartContext";
@@ -52,6 +54,21 @@ export default function ProductDetails() {
     setFailedImageUrls(new Set());
     setCurrentImageIndex(0);
   }, [productId]);
+
+  // Meta Pixel: ViewContent when user views a product page (fire once per product to avoid duplicate events)
+  useEffect(() => {
+    if (lastViewContentProductId === productId) return;
+    lastViewContentProductId = productId;
+    if (typeof window.fbq === "function") {
+      const priceNum = jsonProduct != null ? Number(jsonProduct.price) : parseInt(String(product.price).replace(/[^0-9]/g, ""), 10) || 0;
+      window.fbq("track", "ViewContent", {
+        content_ids: [String(productId)],
+        content_type: "product",
+        value: priceNum,
+        currency: "INR",
+      });
+    }
+  }, [productId, jsonProduct, product.price]);
 
   const handleImageError = () => {
     if (currentImageUrl)
