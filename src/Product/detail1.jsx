@@ -190,6 +190,16 @@ export default function ProductDetails() {
               <button
                 onClick={() => {
                   addToCart(productId, quantity);
+                  // Meta Pixel: AddToCart conversion event
+                  const priceNum = jsonProduct != null ? Number(jsonProduct.price) : parseInt(String(product.price).replace(/[^0-9]/g, ""), 10) || 0;
+                  if (typeof window.fbq === "function") {
+                    window.fbq("track", "AddToCart", {
+                      content_ids: [String(productId)],
+                      content_type: "product",
+                      value: priceNum * quantity,
+                      currency: "INR",
+                    });
+                  }
                   navigate("/cart");
                 }}
                 className="w-full sm:w-auto bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"

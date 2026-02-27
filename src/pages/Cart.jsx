@@ -138,7 +138,16 @@ export default function Cart() {
 
               <div className="flex justify-center gap-4">
                 <button
-                  onClick={() => navigate("/checkout")}
+                  onClick={() => {
+                    // Meta Pixel: InitiateCheckout conversion event
+                    if (typeof window.fbq === "function") {
+                      window.fbq("track", "InitiateCheckout", {
+                        value: total,
+                        currency: "INR",
+                      });
+                    }
+                    navigate("/checkout");
+                  }}
                   className="bg-indigo-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-indigo-700 transition shadow-md"
                 >
                   Proceed to Checkout

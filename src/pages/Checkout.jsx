@@ -57,6 +57,13 @@ export default function Checkout() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Meta Pixel: Purchase conversion event (fire before navigate)
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Purchase", {
+        value: total,
+        currency: "INR",
+      });
+    }
     navigate("/order-success");
   };
 
